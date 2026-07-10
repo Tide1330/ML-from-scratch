@@ -88,11 +88,10 @@ def GET_PREDICTIONS(A3):
 
 
 def GET_ACCURACY(predictions, Y):
-    print(predictions, Y)
     return np.sum(predictions == Y) / Y.size
 
 
-def GD(X, Y, LR, TargetACC=0.95, ITERATIONS=10000):
+def GD(X, Y, LR, TargetACC=0.99, ITERATIONS=100000):
     W1, B1, W2, B2, W3, B3 = INIT_PARAMS()
     current_acc = 0.0
     i = 0
@@ -108,7 +107,7 @@ def GD(X, Y, LR, TargetACC=0.95, ITERATIONS=10000):
 
         current_acc = GET_ACCURACY(GET_PREDICTIONS(A3), Y)
 
-        if i % 50 == 0:
+        if i % 100 == 0:
             print("Iteration", i)
             print("ACC", current_acc)
 
@@ -126,7 +125,7 @@ def GD(X, Y, LR, TargetACC=0.95, ITERATIONS=10000):
     if current_acc >= TargetACC:
         with open("mnistmodel.pkl", "wb") as f:
             pickle.dump(model_data, f)
-        print("looks like your model worked with 95 percent accuracy")
+        print("looks like your model worked with 99 percent accuracy")
     else:
         with open("mnistmodel.pkl", "wb") as f:
             pickle.dump(model_data, f)
